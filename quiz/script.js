@@ -4,36 +4,36 @@ const quizData = [
         a: 'Seoul',
         b: 'Tokyo',
         c: 'Beijing',
-        correct: "a" 
+        correct: 'a' 
     }, {
         question: 'Who is Mohamad Ali?',
         a: 'Poet',
         b: 'MMA Fighter',
         c: "Boxer",
-        correct: "c"
+        correct: 'c'
     }, {
         question: "When did WW2 end?",
         a: '1944',
         b: '1945',
         c: '1946',
-        correct: "b"
+        correct: 'b'
     }, {
         question: 'How many NBA championships does Steph Curry have?',
         a: '2',
         b: '3',
         c: '4',
-        correct: "c"
+        correct: 'c'
     }, {
         question: 'Who is the CEO of Apple?',
         a: "Steve Jobs",
         b: 'Elon Musk',
         c: "Tim Cook",
-        correct: "c"
+        correct: 'c'
     }
 ];
 
-
-const answerEls = document.querySelectorAll("answer");
+const quiz = document.getElementById("quiz");
+const answerEls = document.querySelectorAll(".answer");
 const questionEl = document.getElementById("question");
 const a_text = document.getElementById("a_text");
 const b_text = document.getElementById("b_text");
@@ -45,6 +45,7 @@ let score = 0;
 
 loadQuiz();
 function loadQuiz() {
+    resetCheck();
     const currentQuizData = quizData[currentQuiz];
 
     questionEl.innerText = currentQuizData.question;
@@ -52,8 +53,6 @@ function loadQuiz() {
     a_text.innerText = currentQuizData.a;
     b_text.innerText = currentQuizData.b;
     c_text.innerText = currentQuizData.c;
-
-    currentQuiz++;
 }
 
 function getSelected() {
@@ -64,6 +63,12 @@ function getSelected() {
         }
     });
     return answer;
+}
+
+function resetCheck() {
+    answerEls.forEach((answerEl) => {
+        answerEl.checked = false;
+    });
 }
 
 submitBtn.addEventListener("click", () => {
@@ -77,7 +82,11 @@ submitBtn.addEventListener("click", () => {
             loadQuiz();
         } else {
             //TODO: show results
-            alert("You're done! Great Job!")
+            quiz.innerHTML = `
+                <h2>Your score for the quiz: ${score}/${quizData.length}.</h2> 
+
+                <button onclick= "location.reload()">Reload</>
+            `;
         }
     } 
 });
